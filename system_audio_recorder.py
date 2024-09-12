@@ -48,7 +48,6 @@ def record_system_audio(filename="output.wav"):
     if not os.path.exists(folder):
         os.makedirs(folder)
     filename = folder + "/" + filename
-    print(filename)
     p, available_devices = get_audio_devices()
     input_device, input_device_index = choose_input_device(available_devices)
 
@@ -95,6 +94,8 @@ def record_system_audio(filename="output.wav"):
     wf.setframerate(fs)
     wf.writeframes(b''.join(frames))
     wf.close()
+
+    print(f"Audio file saved to {filename}")
     return filename
 
 def main():
