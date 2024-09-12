@@ -78,13 +78,6 @@ def record_system_audio(filename="output.wav"):
         # Terminate the PortAudio interface
         p.terminate()
 
-    """
-    # Store data in chunks for n seconds
-    for i in range(0, int(fs / chunk * seconds)):
-        data = stream.read(chunk)
-        frames.append(data)
-    """
-
     print('Finished recording')
 
     # Save the recorded data as a WAV file
