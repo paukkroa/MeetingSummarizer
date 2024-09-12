@@ -21,7 +21,7 @@ Install requirements from requirements.txt. Import any missing packages.
 
 If you want to record system audio:
 
-MacOS:
+**MacOS:**
 Install BlackHole (2 channel) from Existential audio: https://existential.audio/blackhole/
 This is used to route system audio to Python.
 
@@ -30,7 +30,7 @@ To make system audio hearable, you need to create a Multi-Output Device in Audio
 Select your primary output (e.g. Macbook Speakers) as primary output and BlackHole as secondary output.
 Choose this Multi-Output Device as your output in the Sound menu.
 
-Windows:
+**Windows:**
 Coming soon
 
 ## Usage
@@ -51,7 +51,7 @@ The program will prompt you to use the existing audio_file if found
 
 If you choose to record system audio, the program will prompt you to select the device.
 
-In MacOS:
+**In MacOS:**
 
 Select Blackhole 2ch by giving the id of it.
 E.g. 
