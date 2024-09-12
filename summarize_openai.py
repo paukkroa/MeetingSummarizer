@@ -11,7 +11,7 @@ def summarize_text(text, model="gpt-4o-mini", write_output=False, output_directo
     completion = client.chat.completions.create(
         model=model,
         messages=[
-            {"role": "system", "content": "You are a helpful assistant. Your job is to summarize the text given by the user. Answer in the user's language as concisely as possible. In the end, present the most important topics of the user's text and their main points. Use at least two sentences for each main point. Tell the user what they should learn from the text."},
+            {"role": "system", "content": "You are a helpful assistant. Your job is to summarize the text given by the user. Answer in the user's language as concisely as possible. Write extensively so that all of the points come through. In the end, present the most important topics of the user's text and their main points. Use at least two sentences for each main point. Tell the user what they should learn from the text."},
             {
                 "role": "user",
                 "content": text
