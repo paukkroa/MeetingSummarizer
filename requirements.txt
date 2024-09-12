@@ -1,0 +1,8 @@
+huggingface-hub==0.24.7
+numba==0.60.0
+openai==1.44.1
+openai-whisper==20231117
+PyAudio==0.2.14
+tokenizers==0.19.1
+torch==2.4.1
+transformers==4.44.2
