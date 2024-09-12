@@ -42,7 +42,10 @@ You can use an existing audiofile (wav or mp3) or record system audio from a liv
 Set the path to the existing audio file in global variables under lecture_summarizer.py
 
 Launch the code in your terminal with 
+
+```
 python3 lecture_summarizer.py
+```
 
 The program will prompt you to use the existing audio_file if found
 
@@ -52,8 +55,10 @@ In MacOS:
 
 Select Blackhole 2ch by giving the id of it.
 E.g. 
+```
 Input Device id  0  -  BlackHole 2ch
 Input Device id  1  -  MacBook Pro Microphone
+```
 
 --> write '1'
 
