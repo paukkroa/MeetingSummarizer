@@ -1,0 +1,11 @@
+# Python files
+*.pyc
+*.pyo
+__pycache__/
+*.py[cod]
+*$py.class
+
+Audio/
+Summarizations/
+Transcriptions/
+test.ipynb
