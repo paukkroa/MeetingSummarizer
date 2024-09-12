@@ -3,6 +3,7 @@
 A tool to capture system audio and create transcriptions and summarizations from it.
 Uses OpenAI's Whisper for transcription and OpenAI API for summarization.
 
+Version: 0.1
 
 ## Table of Contents
 
@@ -12,7 +13,7 @@ Uses OpenAI's Whisper for transcription and OpenAI API for summarization.
 
 ## Operating Systems
 
-Currently only supported for MacOS. 
+System audio recording currently only supported for MacOS. 
 
 ## Installation
 
