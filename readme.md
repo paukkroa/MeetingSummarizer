@@ -1,6 +1,7 @@
 # Lecture Summarizer
 
-A tool to capture system audio and create transcriptions and summarizations from it.
+A Python tool to capture system audio and create transcriptions and summarizations from it.
+You can also use existing audio files of speech.
 Uses OpenAI's Whisper for transcription and OpenAI API for summarization.
 
 Version: 0.1
