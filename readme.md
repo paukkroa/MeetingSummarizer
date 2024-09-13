@@ -6,7 +6,7 @@ Uses OpenAI's Whisper for transcription and OpenAI API for summarization.
 
 Version: 0.1
 
-Currently only for MacOS.
+System audio capturing only for MacOS. Pre-existing audio files should work with Windows.
 
 ## Table of Contents
 
