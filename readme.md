@@ -1,4 +1,4 @@
-# Lecture Summarizer
+# Open Copilot
 
 A Python tool to capture system audio and create transcriptions and summarizations from it.
 You can also use existing audio files of speech.
@@ -45,7 +45,7 @@ Set the path to the existing audio file in global variables under lecture_summar
 Launch the code in your terminal with 
 
 ```
-python3 lecture_summarizer.py
+python3 open_copilot.py
 ```
 
 The program will prompt you to use the existing audio_file if found
