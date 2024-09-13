@@ -6,6 +6,8 @@ Uses OpenAI's Whisper for transcription and OpenAI API for summarization.
 
 Version: 0.1
 
+Currently only for MacOS.
+
 ## Table of Contents
 
 - [Operating Systems](#operatingsystems)
