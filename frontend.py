@@ -43,6 +43,17 @@ absolute_position = 0
 operating_system = None
 MUSIC_DONE = event.custom_type() 
 
+"""
+ _   _      _                    __                  _   _                 
+| | | |    | |                  / _|                | | (_)                
+| |_| | ___| |_ __   ___ _ __  | |_ _   _ _ __   ___| |_ _  ___  _ __  ___ 
+|  _  |/ _ \ | '_ \ / _ \ '__| |  _| | | | '_ \ / __| __| |/ _ \| '_ \/ __|
+| | | |  __/ | |_) |  __/ |    | | | |_| | | | | (__| |_| | (_) | | | \__ \
+\_| |_/\___|_| .__/ \___|_|    |_|  \__,_|_| |_|\___|\__|_|\___/|_| |_|___/
+             | |                                                           
+             |_|                                                           
+"""
+
 def open_file():
     global audio_file
     global audio_loaded
@@ -130,6 +141,79 @@ def record_system_audio(filename, p, input_device, input_device_index):
     print(f"Audio file saved to {filename}")
     audio_file = filename
     return filename
+
+"""
+  ___            _ _               _             _                _    
+ / _ \          | (_)             | |           | |              | |   
+/ /_\ \_   _  __| |_  ___    _ __ | | __ _ _   _| |__   __ _  ___| | __
+|  _  | | | |/ _` | |/ _ \  | '_ \| |/ _` | | | | '_ \ / _` |/ __| |/ /
+| | | | |_| | (_| | | (_) | | |_) | | (_| | |_| | |_) | (_| | (__|   < 
+\_| |_/\__,_|\__,_|_|\___/  | .__/|_|\__,_|\__, |_.__/ \__,_|\___|_|\_\
+                            | |             __/ |                      
+                            |_|            |___/                       
+"""
+def load_audio():
+    global audio_loaded
+    global audio_file
+    global audio_length
+    global new_load
+    global absolute_position
+    mixer.init()
+    if audio_file is not None:
+        mixer.music.load(audio_file)
+        audio_loaded = True
+        audio_length = get_audio_length(audio_file)
+        new_load = True
+        absolute_position = 0
+        if operating_system == "MacOS":
+            audio_file_label.configure(text=audio_file.split("/")[-1])
+        else:
+            audio_file_label.configure(text=audio_file)
+
+def play_audio():
+    global audio_file
+    global is_paused
+    global audio_loaded
+    global new_load
+
+    if not audio_loaded:
+        if audio_file is not None:
+            load_audio()
+            # Set the playhead position to the current position
+            mixer.music.play()
+            is_paused = False
+        else:
+            CTkMessagebox(title="Error", message="No audio file available")
+    elif new_load:
+        mixer.music.play()
+        pause_button.configure(text="Pause") 
+        is_paused = False
+        new_load = False
+    else: 
+        mixer.music.unpause()
+        pause_button.configure(text="Pause") 
+        is_paused = False
+    mixer.music.set_endevent(MUSIC_DONE)
+
+def pause_audio():
+    global audio_file
+    global is_paused
+    global audio_loaded
+    global new_load
+    if audio_file is not None:
+        if not is_paused:
+            # Pause the playback of the audio file using the mixer from pygame library
+            mixer.music.pause()
+            is_paused = True
+            pause_button.configure(text="Stop") 
+        else:
+            mixer.music.stop()
+            new_load = True
+            pause_button.configure(text="Pause") 
+            elapsed_playback_time_label.configure(text="0:00:00.0")
+            timeline_bar.set(0)
+    else:
+        CTkMessagebox(title="Error", message="No audio file available")
 
 def seek_forward(seconds=10):
     global audio_length
@@ -224,105 +308,57 @@ def get_audio_length(audio_file):
         return timedelta(seconds=int(duration))
     else:
         return None
+    
+"""
+  ___            _ _                                           _             
+ / _ \          | (_)                                         (_)            
+/ /_\ \_   _  __| |_  ___    _ __  _ __ ___   ___ ___  ___ ___ _ _ __   __ _ 
+|  _  | | | |/ _` | |/ _ \  | '_ \| '__/ _ \ / __/ _ \/ __/ __| | '_ \ / _` |
+| | | | |_| | (_| | | (_) | | |_) | | | (_) | (_|  __/\__ \__ \ | | | | (_| |
+\_| |_/\__,_|\__,_|_|\___/  | .__/|_|  \___/ \___\___||___/___/_|_| |_|\__, |
+                            | |                                         __/ |
+                            |_|                                        |___/ 
+"""
 
-def load_audio():
-    global audio_loaded
-    global audio_file
-    global audio_length
-    global new_load
-    global absolute_position
-    mixer.init()
-    if audio_file is not None:
-        mixer.music.load(audio_file)
-        audio_loaded = True
-        audio_length = get_audio_length(audio_file)
-        new_load = True
-        absolute_position = 0
-        if operating_system == "MacOS":
-            audio_file_label.configure(text=audio_file.split("/")[-1])
-        else:
-            audio_file_label.configure(text=audio_file)
+def process_audio():
+    # TODO
+    # Get parameters for transcription and gpt task
+    # run them and display progress 
+    # Display results when done
+    print("You clicked me :D")
 
-def play_audio():
-    global audio_file
-    global is_paused
-    global audio_loaded
-    global new_load
+def cancel_processing():
+    audio_file_label.pack_forget()
+    gpt_task_label.pack_forget()
+    gpt_task_dropdown.pack_forget()
+    whisper_model_size_label.pack_forget()
+    whisper_model_size_dropdown.pack_forget()
+    output_processed_switch.pack_forget()
+    output_transcription_switch.pack_forget()
+    cancel_processing_button.pack_forget()
+    process_button.pack_forget()
+    preview_page()
 
-    if not audio_loaded:
-        if audio_file is not None:
-            load_audio()
-            # Set the playhead position to the current position
-            mixer.music.play()
-            is_paused = False
-        else:
-            CTkMessagebox(title="Error", message="No audio file available")
-    elif new_load:
-        mixer.music.play()
-        pause_button.configure(text="Pause") 
-        is_paused = False
-        new_load = False
-    else: 
-        mixer.music.unpause()
-        pause_button.configure(text="Pause") 
-        is_paused = False
-    mixer.music.set_endevent(MUSIC_DONE)
+"""
+ _   _ _____  ______                _   _                 
+| | | |_   _| |  ___|              | | (_)                
+| | | | | |   | |_ _   _ _ __   ___| |_ _  ___  _ __  ___ 
+| | | | | |   |  _| | | | '_ \ / __| __| |/ _ \| '_ \/ __|
+| |_| |_| |_  | | | |_| | | | | (__| |_| | (_) | | | \__ \
+ \___/ \___/  \_|  \__,_|_| |_|\___|\__|_|\___/|_| |_|___/
+"""
 
-def pause_audio():
-    global audio_file
-    global is_paused
-    global audio_loaded
-    global new_load
-    if audio_file is not None:
-        if not is_paused:
-            # Pause the playback of the audio file using the mixer from pygame library
-            mixer.music.pause()
-            is_paused = True
-            pause_button.configure(text="Stop") 
-        else:
-            mixer.music.stop()
-            new_load = True
-            pause_button.configure(text="Pause") 
-            elapsed_playback_time_label.configure(text="0:00:00.0")
-            timeline_bar.set(0)
-    else:
-        CTkMessagebox(title="Error", message="No audio file available")
+def front_page():
+    # Place the record_button and choose_file_button
+    label.pack()
+    record_button.pack()
+    choose_file_button.pack()
 
-def start_recording():
-    global audio_file
-    global audio_device_dict
-    global now_recording
-    # Clear global variable 
-    audio_file = None
-
-    selected_device = device_listbox.get(device_listbox.curselection())
-    if selected_device is None:
-        CTkMessagebox(title="Error", message="You need to have an audio device selected")
-
-    else:
-        # Clean the UI
-        label.pack_forget()
-        record_button.pack_forget()
-        choose_file_button.pack_forget()
-        start_recording_button.pack_forget()
-        back_button.pack_forget()
-        device_listbox.pack_forget()
-
-        # Create a temporary page
-        rec_label.pack()
-        elapsed_time_label.pack()
-        stop_button.pack()
-
-        # Start recording
-        start_time = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-        device_id = audio_device_dict[selected_device]
-        input_device = audio_devices[device_id]
-        filename = fr"ui_recording_{start_time}.wav"
-        now_recording = True
-        def thread_callback():
-            audio_file = record_system_audio(filename, p, input_device, device_id)
-        
-        threading.Thread(target=thread_callback).start()
+    # Clean the UI
+    label.pack_forget()
+    start_recording_button.pack_forget()
+    back_button.pack_forget()
+    device_listbox.pack_forget()
 
 def recording_options_page():
     global audio_device_dict
@@ -362,18 +398,41 @@ def recording_options_page():
     record_button.pack_forget()
     choose_file_button.pack_forget()
 
+def start_recording():
+    global audio_file
+    global audio_device_dict
+    global now_recording
+    # Clear global variable 
+    audio_file = None
 
-def front_page():
-    # Place the record_button and choose_file_button
-    label.pack()
-    record_button.pack()
-    choose_file_button.pack()
+    selected_device = device_listbox.get(device_listbox.curselection())
+    if selected_device is None:
+        CTkMessagebox(title="Error", message="You need to have an audio device selected")
 
-    # Clean the UI
-    label.pack_forget()
-    start_recording_button.pack_forget()
-    back_button.pack_forget()
-    device_listbox.pack_forget()
+    else:
+        # Clean the UI
+        label.pack_forget()
+        record_button.pack_forget()
+        choose_file_button.pack_forget()
+        start_recording_button.pack_forget()
+        back_button.pack_forget()
+        device_listbox.pack_forget()
+
+        # Create a temporary page
+        rec_label.pack()
+        elapsed_time_label.pack()
+        stop_button.pack()
+
+        # Start recording
+        start_time = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+        device_id = audio_device_dict[selected_device]
+        input_device = audio_devices[device_id]
+        filename = fr"ui_recording_{start_time}.wav"
+        now_recording = True
+        def thread_callback():
+            audio_file = record_system_audio(filename, p, input_device, device_id)
+        
+        threading.Thread(target=thread_callback).start()
 
 def stop_recording():
     global now_recording
@@ -445,26 +504,16 @@ def processing_page():
     output_transcription_switch.pack()
     cancel_processing_button.pack()
     process_button.pack()
-    
 
-def process_audio():
-    # TODO
-    # Get parameters for transcription and gpt task
-    # run them and display progress 
-    # Display results when done
-    print("You clicked me :D")
-
-def cancel_processing():
-    audio_file_label.pack_forget()
-    gpt_task_label.pack_forget()
-    gpt_task_dropdown.pack_forget()
-    whisper_model_size_label.pack_forget()
-    whisper_model_size_dropdown.pack_forget()
-    output_processed_switch.pack_forget()
-    output_transcription_switch.pack_forget()
-    cancel_processing_button.pack_forget()
-    process_button.pack_forget()
-    preview_page()
+"""
+ _____ _    _       _                  _          __  __ 
+|_   _| |  (_)     | |                | |        / _|/ _|
+  | | | | ___ _ __ | |_ ___ _ __   ___| |_ _   _| |_| |_ 
+  | | | |/ / | '_ \| __/ _ \ '__| / __| __| | | |  _|  _|
+  | | |   <| | | | | ||  __/ |    \__ \ |_| |_| | | | |  
+  \_/ |_|\_\_|_| |_|\__\___|_|    |___/\__|\__,_|_| |_|  
+                                                                                                                  
+"""
 
 # Create the main window
 window = tk.CTk()
