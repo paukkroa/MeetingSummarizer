@@ -1,18 +1,15 @@
 # TODO 
-# Finish the preview page 
 # Connect to transcribe and summarize
 # Figure out how to display the results in the best way (maybe should be copiable text at least for the summarization) 
 # -maybe a separate output page?
 # Add a button to record from microphone
-# Add toggles to write .txt files by default
-# Add buttons to write into txt files (user selectable folder)
 # Make the window sizes coherent and make the whole thing prettier
-# Stress test for at least a 1,5 hour lecture
+# Stress test for at least a 1,5 hour speech file
 #
 # IDEAS
 # Add different tasks than summarize
 # Advanced settings: select models, modify system prompt, audio settings
-# Create a product from this - free tier and premium tier
+# Create a product from this - free tier with own api keys and premium tier
 
 import customtkinter as tk
 from system_audio_recorder import get_audio_devices
