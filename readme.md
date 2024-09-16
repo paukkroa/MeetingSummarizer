@@ -1,4 +1,4 @@
-# Open Source Meeting Copilot
+# Open Source Meeting Summarizer
 
 A Python tool to capture system audio and create transcriptions and summarizations from it.
 You can also use existing audio files of speech.
