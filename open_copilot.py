@@ -1,6 +1,6 @@
 from system_audio_recorder import record_system_audio
 from transcribe import transcribe
-from summarize_openai import summarize_text
+from openai_handler import handle_gpt
 import os
 from datetime import datetime
 from time import strftime
@@ -11,6 +11,7 @@ PATH_TO_EXISTING_AUDIO_FILE = None
 VERBOSE = False
 WHISPER_MODEL_SIZE = "small"
 GPT_MODEL = "gpt-4o-mini"
+SYSTEM_PROMPT = None
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
@@ -59,10 +60,11 @@ def main(output_transcription=True, output_summarization=True):
                                      filename=f"transcription_{start_time}")
 
     # Summarize text
-    summarized_text = summarize_text(transcibed_text, 
+    summarized_text = handle_gpt(transcibed_text, 
                                      model=GPT_MODEL, 
                                      write_output=output_summarization,
-                                     filename=f"summarization_{start_time}")
+                                     filename=f"summarization_{start_time}",
+                                     system_prompt=SYSTEM_PROMPT)
     
     print("Here is your summarization:")
     print(summarized_text)
