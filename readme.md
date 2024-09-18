@@ -1,7 +1,9 @@
 # Open Source Meeting Summarizer
 
-A Python tool to capture system audio and create transcriptions and summarizations from it.
+A Python tool to capture system audio and apply GPT to create summarizations, notes, Q&As, etc. from it.
+
 You can also use existing audio files of speech.
+
 Uses OpenAI's Whisper for transcription and OpenAI API for summarization.
 
 Version: 0.1
@@ -64,7 +66,7 @@ Input Device id  0  -  BlackHole 2ch
 Input Device id  1  -  MacBook Pro Microphone
 ```
 
---> write '1'
+--> write '0'
 
 Then press any key to start recording when you are ready
 
